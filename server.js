@@ -51,6 +51,7 @@ app.get('/measurements/:id', function (req, res) {
 // POST new measurement
 app.post('/measurements', function (req, res) {
 	var body = _.pick(req.body, 'weight', 'date');
+	console.log(body);
 
 	db.measurement.create(body).then(function (measurement) {
 		res.json(measurement.toJSON());
