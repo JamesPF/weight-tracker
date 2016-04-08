@@ -8,6 +8,7 @@ var PORT = process.env.PORT || 3000;
 var measurements = [];
 
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
 	res.send('Weight tracker API root');
