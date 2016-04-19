@@ -2,9 +2,12 @@
 <html>
 <head>
 	<title>Weight Tracker</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script  type="text/javascript" src="js/d3.min.js"></script>
 </head>
 <body>
   <h1>Weight Tracker App</h1>
+  <svg id="chart"></svg>
   <ul id="measurement-list">
   </ul>
 
@@ -16,7 +19,8 @@
     <input type="submit" />
   </form>
 
-  <script src="/js/jquery-2.2.2.min.js"></script>
-  <script src="/js/app.js"></script>
+  <script src="js/jquery-2.2.2.min.js"></script>
+  <script src="js/moment.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
