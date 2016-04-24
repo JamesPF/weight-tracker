@@ -47,7 +47,7 @@ $(document).ready(function () {
                   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
      // Creates tooltip for displaying date and weight on mouseover
-      var div = d3.select('body').append('div')
+      var tooltipDiv = d3.select('body').append('div')
                 .attr('class', 'tooltip')
                 .style('opacity', 0);
 
@@ -143,15 +143,15 @@ $(document).ready(function () {
             })
             // Displays date and weight on mouseover
             .on('mouseover', function (d) {
-              div.transition()
+              tooltipDiv.transition()
                 .duration(200)
                 .style('opacity', .9);
-              div.html('<span>' + dateFormat(new Date(d.date)) + '<br />' + d.weight + ' lbs</span>')
+              tooltipDiv.html('<span>' + dateFormat(new Date(d.date)) + '<br />' + d.weight + ' lbs</span>')
                 .style('left', (d3.event.pageX + 14) + 'px')
                 .style('top', (d3.event.pageY - 28) + 'px')
             })
             .on('mouseout', function (d) {
-              div.transition()
+              tooltipDiv.transition()
                 .duration(200)
                 .style('opacity', 0);
             });
