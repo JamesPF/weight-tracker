@@ -46,7 +46,7 @@ $(document).ready(function () {
                   .classed('display', true)
                   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-     // Creates tooltip for displaying date and weight on mouseover
+      // Creates tooltip for displaying date and weight on mouseover
       var tooltipDiv = d3.select('body').append('div')
                 .attr('class', 'tooltip')
                 .style('opacity', 0);
@@ -141,19 +141,35 @@ $(document).ready(function () {
             .attr('cy', function (d) {
               return y(d.weight);
             })
-            // Displays date and weight on mouseover
-            .on('mouseover', function (d) {
-              tooltipDiv.transition()
-                .duration(200)
-                .style('opacity', .9);
-              tooltipDiv.html('<span>' + dateFormat(new Date(d.date)) + '<br />' + d.weight + ' lbs</span>')
-                .style('left', (d3.event.pageX + 14) + 'px')
-                .style('top', (d3.event.pageY - 28) + 'px')
-            })
-            .on('mouseout', function (d) {
-              tooltipDiv.transition()
-                .duration(200)
-                .style('opacity', 0);
+            .on('click', function (d) {
+              // If the point isn't active
+              if (!d3.select(this).classed('active')) {
+                // Select any that are active and remove the class from them
+                d3.selectAll('.active')
+                  .classed('active', false);
+
+                // Display the tooltip 
+                tooltipDiv.transition()
+                  .duration(200)
+                  .style('opacity', .9);
+                tooltipDiv.html('<span>' + dateFormat(new Date(d.date)) + '<br />' + d.weight + ' lbs</span>')
+                  .style('left', (d3.event.pageX + 14) + 'px')
+                  .style('top', (d3.event.pageY - 28) + 'px');
+
+                // Add the class of active
+                d3.select(this)
+                  .classed('active', true);
+              } else {
+              // Else, if the point is active
+                // Hide it
+                tooltipDiv.transition()
+                  .duration(200)
+                  .style('opacity', 0);
+
+                // Remove the class of active
+                d3.selectAll('.active')
+                  .classed('active', false);
+              }
             });
 
         // exit()
