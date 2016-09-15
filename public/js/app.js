@@ -221,17 +221,6 @@ $(form).on('submit', function (event) {
 
 });
 
-// D3 Chart
-// Sample data
-// var data = [
-//   {weight: 142, date: '2016-03-14'},
-//   {weight: 145.6, date: '2016-03-21'},
-//   {weight: 146.2, date: '2016-03-28'},
-//   {weight: 148.2, date: '2016-04-4'},
-//   {weight: 149.2, date: '2016-04-11'},
-//   {weight: 146.6, date: '2016-04-18'}
-// ];
-
 
 
 
