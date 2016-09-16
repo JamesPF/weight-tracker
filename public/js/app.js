@@ -27,6 +27,28 @@ $(document).ready(function () {
         var recordedMeasurement = '<li>' + moment(measurement.date).format('MMMM Do YYYY') + ': ' + measurement.weight + ' lbs</li>';
         $(list).append(recordedMeasurement);
       });
+
+      // Begins D3
+
+      // Creates D3 Chart
+      var canvas = d3.select('#chart')
+                    .attr('height', 500)
+                    .attr('width', 1200)
+                    .style({
+                      'background': '#bed', 
+                      'margin': '0 auto', 
+                      'margin-bottom': '50',
+                      'display': 'block', 
+                    });
+
+      var bars = canvas.selectAll('rect')
+                  .data(measurementArray)
+                  .enter()
+                    .append('rect')
+                    .attr('width', 3)
+                    .attr('height', function (d) {return d.weight * 2;})
+                    .attr('x', function (d, i) {return i * 5});
+
     }
   });
 
