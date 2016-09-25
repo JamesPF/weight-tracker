@@ -31,15 +31,20 @@ $(document).ready(function () {
       // Begins D3
 
       // Creates D3 Chart
+      var width = 1200;
+      var height = 500;
+
       var canvas = d3.select('#chart')
-                    .attr('height', 500)
-                    .attr('width', 1200)
+                    .attr('height', height)
+                    .attr('width', width)
                     .style({
                       'background': '#bed', 
                       'margin': '0 auto', 
                       'margin-bottom': '50',
                       'display': 'block', 
-                    });
+                    })
+                    .append('g')
+                    .attr('transform', 'translate(10, 10)');
 
       var bars = canvas.selectAll('rect')
                   .data(measurementArray)
