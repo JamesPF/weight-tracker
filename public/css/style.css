@@ -9,6 +9,10 @@ h1 {
   margin: 40px 0;
 }
 
+#chart {
+  margin-bottom: 50px;
+}
+
 #measurement-list {
   margin-left: 140px;
   margin-bottom: 40px;
@@ -17,4 +21,30 @@ h1 {
 #measurement-form {
   margin-left: 140px;
   margin-bottom: 80px;
+}
+
+/* Chart */
+.tick line {
+  stroke: #888;
+}
+
+.tick:first-of-type line {
+  stroke: #000;
+}
+
+.area {
+  fill: lightblue;
+  stroke-width: 0;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: pink;
+  border: 0px;
+  border-radius: 8px;
 }
