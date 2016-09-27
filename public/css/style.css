@@ -28,10 +28,6 @@ h1 {
   stroke: #888;
 }
 
-.tick:first-of-type line {
-  stroke: #000;
-}
-
 .area {
   fill: lightblue;
   stroke-width: 0;
@@ -40,8 +36,8 @@ h1 {
 .tooltip {
   position: absolute;
   text-align: center;
-  width: 60px;
-  height: 28px;
+  width: 72px;
+  height: 48px;
   padding: 2px;
   font: 12px sans-serif;
   background: pink;

@@ -29,7 +29,7 @@ $(document).ready(function () {
       });
 
       // Begins D3
-      var parsedDate = d3.timeParse('%Y/%m/%d');
+      var parsedDate = d3.timeParse('%Y-%m-%d');
       var height = 500;
       var width = 1200;
       var margin = 20;
@@ -119,6 +119,7 @@ $(document).ready(function () {
       // Appends x axis and moves it to bottom
       canvas.append('g')
               .attr('transform', 'translate (0, ' + (height - (2.5 * margin)) + ')')
+              .attr('class', 'x-axis')
               .call(xAxis);
 
       // Appends y axis
@@ -145,8 +146,8 @@ $(document).ready(function () {
                     .duration(200)
                     .style('opacity', 0.9);
                   div.html(
-                    '<a href="http://www.google.com" target="_blank">Click Here</a><br />' + 
-                    d.weight)
+                    '<a href="http://www.google.com" target="_blank">Edit</a><br />' + 
+                    d.weight + ' on ' + d.date)
                   .style('left', (d3.event.pageX) + 'px')
                   .style('top', (d3.event.pageY - 28) + 'px');
                 });
