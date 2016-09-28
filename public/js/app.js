@@ -53,10 +53,14 @@ $(document).ready(function () {
         // Also creates grid lines that span the width and height of the graph
       var xAxis = d3.axisBottom()
                   .scale(x)
+                  .ticks(d3.timeMonth)
                   .tickSizeInner(-(height - (3.5 * margin)))
                   .tickSizeOuter(0);
       var yAxis = d3.axisLeft()
                   .scale(y)
+                  .ticks(d3.max(measurementArray, function (d) {
+                    return d.weight/10;
+                  }))
                   .tickSizeInner(-(width - (4 * margin)));
 
       // Creates div for tooltip
@@ -67,7 +71,7 @@ $(document).ready(function () {
 
       var canvas = d3.select('#chart')
                     .append('svg')
-                    .attr('height', height)
+                    .attr('height', height+50)
                     .attr('width', width)
                     .style('background', '#bed')
                     .style('display', 'block')
@@ -120,7 +124,12 @@ $(document).ready(function () {
       canvas.append('g')
               .attr('transform', 'translate (0, ' + (height - (2.5 * margin)) + ')')
               .attr('class', 'x-axis')
-              .call(xAxis);
+              .call(xAxis)
+              .selectAll('text')
+                .style('text-anchor', 'end')
+                .attr('transform', function (d) {
+                  return 'rotate(75) translate(60, -4)';
+                });
 
       // Appends y axis
       canvas.append('g')
