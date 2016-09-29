@@ -30,6 +30,7 @@ $(document).ready(function () {
 
       // Begins D3
       var parsedDate = d3.timeParse('%Y-%m-%d');
+      var tooltipDate = d3.timeFormat('%b %d, %Y');
       var height = 500;
       var width = 1200;
       var margin = 20;
@@ -54,6 +55,7 @@ $(document).ready(function () {
       var xAxis = d3.axisBottom()
                   .scale(x)
                   .ticks(d3.timeMonth)
+                  .tickFormat(d3.timeFormat('%b %Y'))
                   .tickSizeInner(-(height - (3.5 * margin)))
                   .tickSizeOuter(0);
       var yAxis = d3.axisLeft()
@@ -73,7 +75,7 @@ $(document).ready(function () {
                     .append('svg')
                     .attr('height', height+50)
                     .attr('width', width)
-                    .style('background', '#bed')
+                    .style('background', '#ECF0F1')
                     .style('display', 'block')
                     .style('margin', '0 auto')
                     .append('g')
@@ -117,7 +119,7 @@ $(document).ready(function () {
                 .attr('class', '.path')
                 .attr('d', line)
                 .attr('fill', 'none')
-                .attr('stroke', 'blue')
+                .attr('stroke', '#2980B9')
                 .attr('stroke-width', 3);
 
       // Appends x axis and moves it to bottom
@@ -126,9 +128,9 @@ $(document).ready(function () {
               .attr('class', 'x-axis')
               .call(xAxis)
               .selectAll('text')
-                .style('text-anchor', 'end')
+                .style('text-anchor', 'start')
                 .attr('transform', function (d) {
-                  return 'rotate(75) translate(60, -4)';
+                  return 'rotate(75) translate(10, -4)';
                 });
 
       // Appends y axis
@@ -140,6 +142,7 @@ $(document).ready(function () {
               .data(measurementArray)
               .enter()
               .append('circle')
+                .attr('fill', '#333')
                 .attr('r', 3)
                 .attr('cx', function (d) {
                   var date = parsedDate(d.date);
@@ -165,12 +168,16 @@ $(document).ready(function () {
       canvas.append('text')
             .attr('text-anchor', 'middle')
             .attr('transform', 'translate(-35,' + (height / 2) + ')rotate(-90)')
+            .attr('font-family', 'Helvetica')
+            .attr('fill', '#222')
             .text('Weight');
 
       // Sets label on x axis
       canvas.append('text')
             .attr('text-anchor', 'middle')
-            .attr('transform', 'translate(' + ((width - (4 * margin)) / 2) + ',' + (height - 10) + ')')
+            .attr('transform', 'translate(' + ((width - (4 * margin)) / 2) + ',' + (height + (1.5 * margin)) + ')')
+            .attr('font-family', 'Helvetica')
+            .attr('fill', '#222')
             .text('Date');
 
     }

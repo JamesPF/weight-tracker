@@ -4,6 +4,8 @@
 }
 
 h1 {
+  font-family: "Helvetica", sans-serif;
+  color: #333;
   width: 100%;
   text-align: center;
   margin: 40px 0;
@@ -16,6 +18,7 @@ h1 {
 #measurement-list {
   margin-left: 140px;
   margin-bottom: 40px;
+  display: none;
 }
 
 #measurement-form {
@@ -23,14 +26,46 @@ h1 {
   margin-bottom: 80px;
 }
 
+#measurement-form input[type="date"], #measurement-form input[type="number"] {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.467;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  height: 18px;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+#measurement-form input[type="submit"] {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.467;
+  padding: 8px 32px;
+  margin-bottom: 12px;
+  height: 42px;
+  border-radius: 6px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
 /* Chart */
 .tick line {
   stroke: #888;
 }
 
+.tick text {
+  fill: #444;
+}
+
 .area {
-  fill: lightblue;
+  fill: #3498DB;
   stroke-width: 0;
+  opacity: 0.5;
 }
 
 .tooltip {
@@ -40,7 +75,7 @@ h1 {
   height: 48px;
   padding: 2px;
   font: 12px sans-serif;
-  background: pink;
+  background: #E67E22;
   border: 0px;
   border-radius: 8px;
 }
