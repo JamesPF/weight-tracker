@@ -41,7 +41,7 @@ $(document).ready(function () {
                 var date = parsedDate(d.date);
                 return date;
               }))
-              .range([0, (width - (4 * margin))]);
+              .range([0, (width - (3.5 * margin))]);
       // y scale that starts at zero, and ends at the greatest value
         // the range of [height, 0] makes it scale bottom to top
       var y = d3.scaleLinear()
@@ -63,7 +63,7 @@ $(document).ready(function () {
                   .ticks(d3.max(measurementArray, function (d) {
                     return d.weight/10;
                   }))
-                  .tickSizeInner(-(width - (4 * margin)));
+                  .tickSizeInner(-(width - (3.5 * margin)));
 
       // Creates div for tooltip
       var div = d3.select('#chart')
