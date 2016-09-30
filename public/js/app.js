@@ -30,10 +30,10 @@ $(document).ready(function () {
 
       // Begins D3
       var parsedDate = d3.timeParse('%Y-%m-%d');
-      var tooltipDate = d3.timeFormat('%b %d, %Y');
-      var height = 500;
+      var tooltipDate = d3.timeFormat('%b %e, %Y');
+      var height = 550;
       var width = 1200;
-      var margin = 20;
+      var margin = 50;
 
       // x scale that starts at the earliest date and ends at the latest date
       var x = d3.scaleTime()
@@ -48,7 +48,7 @@ $(document).ready(function () {
               .domain([0, d3.max(measurementArray, function (d) {
                 return d.weight;
               })])
-              .range([(height - (2.5 * margin)), margin]);
+              .range([(height - (1.5*margin)), margin]);
 
       // Creates axes on using the x and y scales above
         // Also creates grid lines that span the width and height of the graph
@@ -56,7 +56,7 @@ $(document).ready(function () {
                   .scale(x)
                   .ticks(d3.timeMonth)
                   .tickFormat(d3.timeFormat('%b %Y'))
-                  .tickSizeInner(-(height - (3.5 * margin)))
+                  .tickSizeInner(-(height - (2.5*margin)))
                   .tickSizeOuter(0);
       var yAxis = d3.axisLeft()
                   .scale(y)
@@ -73,13 +73,13 @@ $(document).ready(function () {
 
       var canvas = d3.select('#chart')
                     .append('svg')
-                    .attr('height', height+50)
+                    .attr('height', height)
                     .attr('width', width)
                     .style('background', '#ECF0F1')
                     .style('display', 'block')
                     .style('margin', '0 auto')
                     .append('g')
-                      .attr('transform', 'translate (60, 0)');
+                      .attr('transform', 'translate (90, -30)');
 
       // Generates the fill area beneath the data line
         // Uses same x function as var line, with y1 val set to var line's y val, with y0 making the other edge along the bottom axis
@@ -88,7 +88,7 @@ $(document).ready(function () {
                     var date = parsedDate(d.date);
                     return x(date);
                    })
-                   .y0((height - (2.5 * margin)))
+                   .y0(height - (1.5*margin))
                    .y1(function (d) {return y(d.weight);})
                    .curve(d3.curveMonotoneX);
 
@@ -124,7 +124,7 @@ $(document).ready(function () {
 
       // Appends x axis and moves it to bottom
       canvas.append('g')
-              .attr('transform', 'translate (0, ' + (height - (2.5 * margin)) + ')')
+              .attr('transform', 'translate (0, ' + (height - (1.5*margin)) + ')')
               .attr('class', 'x-axis')
               .call(xAxis)
               .selectAll('text')
@@ -157,9 +157,9 @@ $(document).ready(function () {
                   div.transition()
                     .duration(200)
                     .style('opacity', 0.9);
-                  div.html(
-                    '<a href="http://www.google.com" target="_blank">Edit</a><br />' + 
-                    d.weight + ' on ' + d.date)
+                  div.html( 
+                    '<p>' + d.weight + ' lbs on<br /> ' + tooltipDate(parsedDate(d.date)) + '</p>' + 
+                    '<a href="http://www.google.com" target="_blank" class="edit">Edit</a>')
                   .style('left', (d3.event.pageX) + 'px')
                   .style('top', (d3.event.pageY - 28) + 'px');
                 });
@@ -175,7 +175,7 @@ $(document).ready(function () {
       // Sets label on x axis
       canvas.append('text')
             .attr('text-anchor', 'middle')
-            .attr('transform', 'translate(' + ((width - (4 * margin)) / 2) + ',' + (height + (1.5 * margin)) + ')')
+            .attr('transform', 'translate(' + ((width - (4 * margin)) / 2) + ',' + (height + 10) + ')')
             .attr('font-family', 'Helvetica')
             .attr('fill', '#222')
             .text('Date');
