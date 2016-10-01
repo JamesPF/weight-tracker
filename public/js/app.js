@@ -1,5 +1,5 @@
 var list = $('#measurement-list');
-var form = $('#measurement-form');
+var form = $('#measurement-entry');
 var measurementArray = [];
 
 $(document).ready(function () {
@@ -35,15 +35,13 @@ $(document).ready(function () {
       var width = 1200;
       var margin = 50;
 
-      // x scale that starts at the earliest date and ends at the latest date
       var x = d3.scaleTime()
               .domain(d3.extent(measurementArray, function (d) {
                 var date = parsedDate(d.date);
                 return date;
               }))
               .range([0, (width - (3.5 * margin))]);
-      // y scale that starts at zero, and ends at the greatest value
-        // the range of [height, 0] makes it scale bottom to top
+
       var y = d3.scaleLinear()
               .domain([0, d3.max(measurementArray, function (d) {
                 return d.weight;
@@ -51,7 +49,7 @@ $(document).ready(function () {
               .range([(height - (1.5*margin)), margin]);
 
       // Creates axes on using the x and y scales above
-        // Also creates grid lines that span the width and height of the graph
+      // Also creates grid lines that span the width and height of the graph
       var xAxis = d3.axisBottom()
                   .scale(x)
                   .ticks(d3.timeMonth)
@@ -82,7 +80,6 @@ $(document).ready(function () {
                       .attr('transform', 'translate (90, -30)');
 
       // Generates the fill area beneath the data line
-        // Uses same x function as var line, with y1 val set to var line's y val, with y0 making the other edge along the bottom axis
       var area = d3.area()
                    .x(function (d) {
                     var date = parsedDate(d.date);
@@ -93,9 +90,6 @@ $(document).ready(function () {
                    .curve(d3.curveMonotoneX);
 
       // Generates the lines
-        // Each parsed date item is filtered through the x scale
-        // Each weight item is filtered through the y scale
-        // A curve is set to each line to make it smoother
       var line = d3.line()
                   .x(function (d) {
                     var date = parsedDate(d.date);
@@ -105,7 +99,6 @@ $(document).ready(function () {
                   .curve(d3.curveMonotoneX);
 
       // Creates the fill area beneath the line
-        // This is set before both the line and points so it's underneath everything else
       canvas.append('path')
             .data([measurementArray])
             .attr('class', 'area')
@@ -159,7 +152,7 @@ $(document).ready(function () {
                     .style('opacity', 0.9);
                   div.html( 
                     '<p>' + d.weight + ' lbs on<br /> ' + tooltipDate(parsedDate(d.date)) + '</p>' + 
-                    '<a href="http://www.google.com" target="_blank" class="edit">Edit</a>')
+                    '<button class="edit">Edit</button>')
                   .style('left', (d3.event.pageX) + 'px')
                   .style('top', (d3.event.pageY - 28) + 'px');
                 });
