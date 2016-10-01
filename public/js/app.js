@@ -143,7 +143,7 @@ $(document).ready(function () {
                 })
                 .attr('cy', function (d) {return y(d.weight);})
                 // Displays tooltip
-                .on('mouseover', function (d) {
+                .on('mouseover', function (d, i) {
                   div.transition()
                     .duration(500)
                     .style('opacity', 0);
@@ -152,9 +152,26 @@ $(document).ready(function () {
                     .style('opacity', 0.9);
                   div.html( 
                     '<p>' + d.weight + ' lbs on<br /> ' + tooltipDate(parsedDate(d.date)) + '</p>' + 
-                    '<button class="edit">Edit</button>')
+                    '<button class="edit" id="edit-' + i + '">Edit</button>')
                   .style('left', (d3.event.pageX) + 'px')
                   .style('top', (d3.event.pageY - 28) + 'px');
+                  d3.select('.edit')
+                    .on('click', function () {
+                      // alert('You weighed ' + d.weight + ' on ' + d.date);
+                      d3.select('#page-overlay')
+                        .style('display', 'block');
+                      d3.select('#myModal')
+                        .style('display', 'block')
+                        .style('left', '50%')
+                        .html(
+                          '<form class="measurement-form" id="measurement-update">' + 
+                          '<h2>Update Measurement</h2>' + 
+                          '<input type="date" name="date" placeholder="' + d.date + '" /><br>' + 
+                          '<input type="number" name="weight" step="0.1" min="0" placeholder="' + d.weight + '" /><br>' + 
+                          '<input type="submit" />' + 
+                          '</form>'
+                        );
+                    });
                 });
 
       // Sets label on y axis
