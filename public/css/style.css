@@ -96,6 +96,7 @@ h2 {
   position: absolute;
   display: none;
   top: 100px;
+  width: 200px;
   border-radius: 8px;
 }
 

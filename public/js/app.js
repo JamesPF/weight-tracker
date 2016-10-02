@@ -1,5 +1,6 @@
 var list = $('#measurement-list');
 var form = $('#measurement-entry');
+var updateForm = $('#measurement-update');
 var measurementArray = [];
 
 $(document).ready(function () {
@@ -34,6 +35,7 @@ $(document).ready(function () {
       var height = 550;
       var width = 1200;
       var margin = 50;
+      var modalWidth = d3.select('.modal').style('width');
 
       var x = d3.scaleTime()
               .domain(d3.extent(measurementArray, function (d) {
@@ -152,25 +154,43 @@ $(document).ready(function () {
                     .style('opacity', 0.9);
                   div.html( 
                     '<p>' + d.weight + ' lbs on<br /> ' + tooltipDate(parsedDate(d.date)) + '</p>' + 
-                    '<button class="edit" id="edit-' + i + '">Edit</button>')
+                    '<button class="edit" id="edit-' + (i+1) + '">Edit</button>')
                   .style('left', (d3.event.pageX) + 'px')
                   .style('top', (d3.event.pageY - 28) + 'px');
+                  // Modal appears when 'edit' button is clicked
                   d3.select('.edit')
                     .on('click', function () {
-                      // alert('You weighed ' + d.weight + ' on ' + d.date);
+                      modalWidth = parseInt(modalWidth);
                       d3.select('#page-overlay')
                         .style('display', 'block');
-                      d3.select('#myModal')
+                      d3.select('.modal')
                         .style('display', 'block')
                         .style('left', '50%')
+                        .style('margin-left', '-' + (modalWidth/1.42) + 'px')
+                        .attr('id', 'modal-' + (i+1) + '')
                         .html(
                           '<form class="measurement-form" id="measurement-update">' + 
-                          '<h2>Update Measurement</h2>' + 
-                          '<input type="date" name="date" placeholder="' + d.date + '" /><br>' + 
-                          '<input type="number" name="weight" step="0.1" min="0" placeholder="' + d.weight + '" /><br>' + 
-                          '<input type="submit" />' + 
+                            '<h2>Update Measurement</h2>' + 
+                            '<input type="date" name="date" value="' + d.date + '" /><br>' + 
+                            '<input type="number" name="weight" step="0.1" min="0" value="' + d.weight + '" /><br>' + 
+                            '<input id="submit" type="submit" />' + 
                           '</form>'
                         );
+
+                      // Hides dark overlay and modal when overlay is clicked
+                      d3.select('#page-overlay')
+                        .on('click', function () {
+                          d3.select('#page-overlay')
+                            .style('display', 'none');
+                          d3.select('.modal')
+                            .style('display', 'none');
+                        });
+
+                      // Runs UPDATE method
+                      d3.select('#measurement-update')
+                        .on('submit', function () {
+                          alert('yay');
+                        });
                     });
                 });
 
