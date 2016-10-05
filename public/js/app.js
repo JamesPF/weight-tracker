@@ -189,7 +189,8 @@ $(document).ready(function () {
                       // Runs UPDATE method
                       d3.select('#measurement-update')
                         .on('submit', function () {
-                          alert('yay');
+                          d3.event.preventDefault();
+                          // measurementUpdate();
                         });
                     });
                 });
@@ -236,6 +237,27 @@ $(form).on('submit', function (event) {
   });
 
 });
+
+// PUT updateForm data to server
+function measurementUpdate () {
+  var date = updateForm.find('input[name=date]');
+  var weight = updateForm.find('input[name=weight]');
+  console.log(date);
+
+  var measurement = {
+    'date': date.val(),
+    'weight': weight.val()
+  };
+
+  $.ajax('/measurements/:id', {
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(measurement),
+    success: function (data) {
+      console.log(data);
+    }
+  });
+}
 
 
 
