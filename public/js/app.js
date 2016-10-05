@@ -3,6 +3,7 @@ var form = $('#measurement-entry');
 var updateForm = $('#measurement-update');
 var measurementArray = [];
 
+
 $(document).ready(function () {
 
   // GET measurements from server when DOM loads
@@ -190,7 +191,7 @@ $(document).ready(function () {
                       d3.select('#measurement-update')
                         .on('submit', function () {
                           d3.event.preventDefault();
-                          // measurementUpdate();
+                          measurementUpdate();
                         });
                     });
                 });
@@ -240,23 +241,23 @@ $(form).on('submit', function (event) {
 
 // PUT updateForm data to server
 function measurementUpdate () {
-  var date = updateForm.find('input[name=date]');
-  var weight = updateForm.find('input[name=weight]');
-  console.log(date);
+  var date = $('#measurement-update input[name=date]');
+  var weight = $('#measurement-update input[name=weight]');
+  console.log(weight.val());
 
   var measurement = {
     'date': date.val(),
     'weight': weight.val()
   };
 
-  $.ajax('/measurements/:id', {
-    type: 'PUT',
-    contentType: 'application/json',
-    data: JSON.stringify(measurement),
-    success: function (data) {
-      console.log(data);
-    }
-  });
+  // $.ajax('/measurements/:id', {
+  //   type: 'PUT',
+  //   contentType: 'application/json',
+  //   data: JSON.stringify(measurement),
+  //   success: function (data) {
+  //     console.log(data);
+  //   }
+  // });
 }
 
 
