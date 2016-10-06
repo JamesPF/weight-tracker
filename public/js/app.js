@@ -14,7 +14,8 @@ $(document).ready(function () {
       measurements.forEach(function (measurement) {
         var weight = measurement.weight;
         var date = measurement.date;
-        var recordedMeasurement = {weight, date};
+        var id = measurement.id;
+        var recordedMeasurement = {weight, date, id};
 
         measurementArray.push(recordedMeasurement);
       });
@@ -174,6 +175,7 @@ $(document).ready(function () {
                             '<h2>Update Measurement</h2>' + 
                             '<input type="date" name="date" value="' + d.date + '" /><br>' + 
                             '<input type="number" name="weight" step="0.1" min="0" value="' + d.weight + '" /><br>' + 
+                            '<input type="hidden" name="id" value="' + d.id + '" />' + 
                             '<input id="submit" type="submit" />' + 
                           '</form>'
                         );
@@ -243,21 +245,22 @@ $(form).on('submit', function (event) {
 function measurementUpdate () {
   var date = $('#measurement-update input[name=date]');
   var weight = $('#measurement-update input[name=weight]');
-  console.log(weight.val());
+  var id = $('#measurement-update input[name=id]');
 
   var measurement = {
     'date': date.val(),
-    'weight': weight.val()
+    'weight': weight.val(),
+    'id': id.val()
   };
 
-  // $.ajax('/measurements/:id', {
-  //   type: 'PUT',
-  //   contentType: 'application/json',
-  //   data: JSON.stringify(measurement),
-  //   success: function (data) {
-  //     console.log(data);
-  //   }
-  // });
+  $.ajax('/measurements/' + measurement.id, {
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(measurement),
+    success: function (data) {
+      console.log(data);
+    }
+  });
 }
 
 
