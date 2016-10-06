@@ -176,7 +176,7 @@ $(document).ready(function () {
                             '<input type="date" name="date" value="' + d.date + '" /><br>' + 
                             '<input type="number" name="weight" step="0.1" min="0" value="' + d.weight + '" /><br>' + 
                             '<input type="hidden" name="id" value="' + d.id + '" />' + 
-                            '<input id="submit" type="submit" />' + 
+                            '<button id="submit" type="submit">Submit</button> <button id="delete" type="button">Delete</button>' + 
                           '</form>'
                         );
 
@@ -194,6 +194,13 @@ $(document).ready(function () {
                         .on('submit', function () {
                           d3.event.preventDefault();
                           measurementUpdate();
+                        });
+
+                      // Runs DELETE method
+                      d3.select('#measurement-update #delete')
+                        .on('click', function () {
+                          d3.event.preventDefault();
+                          measurementDelete();
                         });
                     });
                 });
@@ -259,6 +266,22 @@ function measurementUpdate () {
     data: JSON.stringify(measurement),
     success: function (data) {
       console.log(data);
+    }
+  });
+}
+
+// DELETE updateForm data from server
+function measurementDelete () {
+  var id = $('#measurement-update input[name=id]');
+
+  var measurement = {
+    'id': id.val()
+  }
+  
+  $.ajax('/measurements/' + measurement.id, {
+    type: 'DELETE',
+    success: function () {
+      console.log('removed');
     }
   });
 }
