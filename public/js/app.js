@@ -194,6 +194,11 @@ $(document).ready(function () {
                         .on('submit', function () {
                           d3.event.preventDefault();
                           measurementUpdate();
+
+                          d3.select('#page-overlay')
+                            .style('display', 'none');
+                          d3.select('.modal')
+                            .style('display', 'none');
                         });
 
                       // Runs DELETE method
@@ -201,6 +206,11 @@ $(document).ready(function () {
                         .on('click', function () {
                           d3.event.preventDefault();
                           measurementDelete();
+
+                          d3.select('#page-overlay')
+                            .style('display', 'none');
+                          d3.select('.modal')
+                            .style('display', 'none');
                         });
                     });
                 });

@@ -61,7 +61,7 @@ h2 {
   box-shadow: none;
 }
 
-.measurement-form button {
+.measurement-form button, .measurement-form input[type="submit"] {
   border: 2px solid #bdc3c7;
   color: #34495e;
   font-family: "Lato", Helvetica, Arial, sans-serif;
