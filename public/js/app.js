@@ -3,6 +3,122 @@ var form = $('#measurement-entry');
 var updateForm = $('#measurement-update');
 var measurementArray = [];
 
+$(document).ready(function () {
+
+  // GET measurements and draw graph
+  measurementsGet(function () {
+    draw(measurementArray);
+  });
+});
+
+// GET measurements from server
+function measurementsGet (handleData) {
+  $.ajax('/measurements', {
+    type: 'GET',
+    dataType: 'json',
+    success: function (measurements) {
+      measurements.forEach(function (measurement) {
+        var weight = measurement.weight;
+        var date = measurement.date;
+        var id = measurement.id;
+        var recordedMeasurement = {weight, date, id};
+
+        measurementArray.push(recordedMeasurement);
+      });
+
+      // Sort measurementArray in chronological order
+      measurementArray.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+
+      // Display measurement Array in list in html
+      measurementArray.forEach(function (measurement) {
+        var recordedMeasurement = '<li>' + moment(measurement.date).format('MMMM Do YYYY') + ': ' + measurement.weight + ' lbs</li>';
+        $(list).append(recordedMeasurement);
+      });
+
+      handleData(measurementArray);
+    }
+  });
+}
+
+// POST form data to server
+$(form).on('submit', function (event) {
+  event.preventDefault();
+
+  var date = form.find('input[name=date]');
+  var weight = form.find('input[name=weight]');
+
+  var measurement = {
+    'date': date.val(),
+    'weight': weight.val()
+  };
+
+  $.ajax('/measurements', {
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(measurement),
+    success: function (data) {
+      console.log(data);
+      measurementArray = [];
+      measurementsGet(function () {
+        $('#chart svg').remove();
+        draw(measurementArray);
+      });
+    }
+  });
+
+});
+
+// PUT updateForm data to server
+function measurementUpdate () {
+  var date = $('#measurement-update input[name=date]');
+  var weight = $('#measurement-update input[name=weight]');
+  var id = $('#measurement-update input[name=id]');
+
+  var measurement = {
+    'date': date.val(),
+    'weight': weight.val(),
+    'id': id.val()
+  };
+
+  $.ajax('/measurements/' + measurement.id, {
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(measurement),
+    success: function (data) {
+      console.log(data);
+      measurementArray = [];
+      measurementsGet(function () {
+        $('#chart svg').remove();
+        draw(measurementArray);
+      });
+    }
+  });
+}
+
+// DELETE updateForm data from server
+function measurementDelete () {
+  var id = $('#measurement-update input[name=id]');
+
+  var measurement = {
+    'id': id.val()
+  }
+  
+  $.ajax('/measurements/' + measurement.id, {
+    type: 'DELETE',
+    success: function () {
+      console.log('removed');
+      measurementArray = [];
+      measurementsGet(function () {
+        $('#chart svg').remove();
+        draw(measurementArray);
+      });
+    }
+  });
+}
+
+// Draws graph
 function draw(measurementArray) {
   // Begins D3
   var parsedDate = d3.timeParse('%Y-%m-%d');
@@ -135,6 +251,7 @@ function draw(measurementArray) {
               // Modal appears when 'edit' button is clicked
               d3.select('.edit')
                 .on('click', function () {
+                  d3.event.preventDefault();
                   modalWidth = parseInt(modalWidth);
                   d3.select('#page-overlay')
                     .style('display', 'block');
@@ -203,103 +320,6 @@ function draw(measurementArray) {
         .attr('font-family', 'Helvetica')
         .attr('fill', '#222')
         .text('Date');
-}
-
-$(document).ready(function () {
-
-  // GET measurements from server when DOM loads
-  $.ajax('/measurements', {
-    type: 'GET',
-    dataType: 'json',
-    success: function (measurements) {
-      measurements.forEach(function (measurement) {
-        var weight = measurement.weight;
-        var date = measurement.date;
-        var id = measurement.id;
-        var recordedMeasurement = {weight, date, id};
-
-        measurementArray.push(recordedMeasurement);
-      });
-
-      // Sort measurementArray in chronological order
-      measurementArray.sort(function (a, b) {
-        return new Date(a.date) - new Date(b.date);
-      });
-
-      // Display measurement Array in list in html
-      measurementArray.forEach(function (measurement) {
-        var recordedMeasurement = '<li>' + moment(measurement.date).format('MMMM Do YYYY') + ': ' + measurement.weight + ' lbs</li>';
-        $(list).append(recordedMeasurement);
-      });
-
-    draw(measurementArray);
-
-    }
-  });
-});
-
-// POST form data to server
-$(form).on('submit', function (event) {
-  event.preventDefault();
-
-  var date = form.find('input[name=date]');
-  var weight = form.find('input[name=weight]');
-
-  var measurement = {
-    'date': date.val(),
-    'weight': weight.val()
-  };
-
-  $.ajax('/measurements', {
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(measurement),
-    success: function (data) {
-      console.log(data);
-      measurementArray.push(data);
-      $('#chart svg').remove();
-      draw(measurementArray);
-    }
-  });
-
-});
-
-// PUT updateForm data to server
-function measurementUpdate () {
-  var date = $('#measurement-update input[name=date]');
-  var weight = $('#measurement-update input[name=weight]');
-  var id = $('#measurement-update input[name=id]');
-
-  var measurement = {
-    'date': date.val(),
-    'weight': weight.val(),
-    'id': id.val()
-  };
-
-  $.ajax('/measurements/' + measurement.id, {
-    type: 'PUT',
-    contentType: 'application/json',
-    data: JSON.stringify(measurement),
-    success: function (data) {
-      console.log(data);
-    }
-  });
-}
-
-// DELETE updateForm data from server
-function measurementDelete () {
-  var id = $('#measurement-update input[name=id]');
-
-  var measurement = {
-    'id': id.val()
-  }
-  
-  $.ajax('/measurements/' + measurement.id, {
-    type: 'DELETE',
-    success: function () {
-      console.log('removed');
-    }
-  });
 }
 
 
