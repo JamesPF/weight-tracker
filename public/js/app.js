@@ -67,7 +67,6 @@ $(form).on('submit', function (event) {
       });
     }
   });
-
 });
 
 // PUT updateForm data to server
@@ -289,6 +288,10 @@ function draw(measurementArray) {
                         .style('display', 'none');
                       d3.select('.modal')
                         .style('display', 'none');
+
+                      div.transition()
+                          .duration(500)
+                          .style('opacity', 0);
                     });
 
                   // Runs DELETE method
