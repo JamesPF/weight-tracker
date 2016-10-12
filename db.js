@@ -21,6 +21,7 @@ var db = {};
 
 // Creates measurement, and brings in measurement from measurement.js
 db.measurement = sequelize.import(__dirname + '/models/measurement.js');
+db.user = sequelize.import(__dirname + '/models/user.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
