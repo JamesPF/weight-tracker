@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 var db = require('./db.js');
 var bcrypt = require('bcrypt');
+var middleware = require('./middleware.js')(db);
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -19,7 +20,7 @@ app.get('/', function (req, res) {
 // MEAUSREMENTS
 
 // GET all measurements
-app.get('/measurements', function (req, res) {
+app.get('/measurements', middleware.requireAuthentication, function (req, res) {
 
 	db.measurement.findAll().then(function (measurements) {
 		res.json(measurements);
@@ -31,7 +32,7 @@ app.get('/measurements', function (req, res) {
 
 
 // GET single measurement
-app.get('/measurements/:id', function (req, res) {
+app.get('/measurements/:id', middleware.requireAuthentication, function (req, res) {
 	var measurementId = parseInt(req.params.id, 10);
 
 	db.measurement.findOne({
@@ -52,7 +53,7 @@ app.get('/measurements/:id', function (req, res) {
 
 
 // POST new measurement
-app.post('/measurements', function (req, res) {
+app.post('/measurements', middleware.requireAuthentication, function (req, res) {
 	var body = _.pick(req.body, 'weight', 'date');
 	console.log(body);
 
@@ -65,7 +66,7 @@ app.post('/measurements', function (req, res) {
 });
 
 // PUT update measurement
-app.put('/measurements/:id', function (req, res) {
+app.put('/measurements/:id', middleware.requireAuthentication, function (req, res) {
 	var measurementId = parseInt(req.params.id, 10);
 	var body = _.pick(req.body, 'weight', 'date');
 
@@ -101,7 +102,7 @@ app.put('/measurements/:id', function (req, res) {
 
 
 // DELETE measurement
-app.delete('/measurements/:id', function (req, res) {
+app.delete('/measurements/:id', middleware.requireAuthentication, function (req, res) {
 	var measurementId = parseInt(req.params.id, 10);
 
 	db.measurement.destroy({
