@@ -19,12 +19,14 @@ if (env === 'production') {
 // Creates db
 var db = {};
 
-// Creates measurement, and brings in measurement from measurement.js
 db.measurement = sequelize.import(__dirname + '/models/measurement.js');
 db.user = sequelize.import(__dirname + '/models/user.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// Allows db to be used in other files
+// Sets belongs to and has many associations
+db.measurement.belongsTo(db.user);
+db.user.hasMany(db.measurement);
+
 module.exports = db;

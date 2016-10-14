@@ -58,8 +58,11 @@ app.post('/measurements', middleware.requireAuthentication, function (req, res) 
 	console.log(body);
 
 	db.measurement.create(body).then(function (measurement) {
-		res.json(measurement.toJSON());
-		console.log('Success');
+    req.user.addMeasurement(measurement).then(function () {
+      return measurement.reload();
+    }).then(function (measurement) {
+      res.json(measurement.toJSON());
+    });
 	}, function (e) {
 		res.status(400).json(e);
 	});
