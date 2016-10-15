@@ -1,31 +1,22 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE <html>
 <head>
-  <title>Weight Tracker</title>
+  <title>Login</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script type="text/javascript" src="js/d3.min.js"></script>
 </head>
 <body>
-  <h1>Weight Tracker App</h1>
-  <div id="chart"></div>
-  <ul id="measurement-list">
-  </ul>
-
-  <form class="measurement-form" id="measurement-entry">
-    <h2>New Entry</h2>
-    <input type="date" name="date" />
+  <h1>Please Sign In</h1>
+  <form class="email-password">
+    <input type="email" name="email" placeholder="Email" />
     <br>
-    <input type="number" name="weight" step="0.1" min="0" />
+    <input type="password" name="password" placeholder="Password" />
     <br>
-    <input type="submit" />
+    <input type="submit" value="Sign In" />
   </form>
-  
-  <div id="page-overlay"></div>
-
-  <div class="modal"></div>
+  <div class="below-form">
+    <p>Don't have an account? Sign up <a href="sign-up.html">here</a>.</p>
+  </div>
 
   <script src="js/jquery-2.2.2.min.js"></script>
-  <script src="js/moment.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@ h2 {
   display: none;
 }
 
-.measurement-form {
+.measurement-form, .email-password {
   display: block;
   width: 200px;
   margin: 0 auto;
@@ -48,7 +48,10 @@ h2 {
   margin-bottom: 12px;
 }
 
-.measurement-form input[type="date"], .measurement-form input[type="number"] {
+.measurement-form input[type="date"], 
+.measurement-form input[type="number"],
+.email-password input[type="email"], 
+.email-password input[type="password"] {
   border: 2px solid #bdc3c7;
   color: #34495e;
   font-family: "Lato", Helvetica, Arial, sans-serif;
@@ -61,7 +64,10 @@ h2 {
   box-shadow: none;
 }
 
-.measurement-form button, .measurement-form input[type="submit"] {
+.measurement-form button,
+.measurement-form input[type="submit"],
+.email-password button,
+.email-password input[type="submit"] {
   border: 2px solid #bdc3c7;
   color: #34495e;
   font-family: "Lato", Helvetica, Arial, sans-serif;
@@ -85,6 +91,13 @@ h2 {
 #measurement-update {
   width: 240px;
   margin-bottom: 0px;
+}
+
+.below-form {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* Modal */

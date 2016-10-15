@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 });
 
 
-// MEAUSREMENTS
+// MEASUREMENTS
 
 // GET all measurements
 app.get('/measurements', middleware.requireAuthentication, function (req, res) {
