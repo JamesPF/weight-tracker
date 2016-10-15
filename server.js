@@ -21,8 +21,14 @@ app.get('/', function (req, res) {
 
 // GET all measurements
 app.get('/measurements', middleware.requireAuthentication, function (req, res) {
+  var query = req.query;
+  var where = {
+    userId: req.user.get('id')
+  };
 
-	db.measurement.findAll().then(function (measurements) {
+	db.measurement.findAll({
+    where: where
+  }).then(function (measurements) {
 		res.json(measurements);
 	}, function (e) {
 		res.status(500).send();
@@ -37,7 +43,8 @@ app.get('/measurements/:id', middleware.requireAuthentication, function (req, re
 
 	db.measurement.findOne({
 		where: {
-			id: measurementId
+			id: measurementId,
+      userId: req.user.get('id')
 		}
 	}).then(function (measurement) {
 		if (!!measurement) {
@@ -85,7 +92,8 @@ app.put('/measurements/:id', middleware.requireAuthentication, function (req, re
 
   db.measurement.findOne({
   	where: {
-  		id: measurementId
+  		id: measurementId,
+      userId: req.user.get('id')
   	}
   }).then(function (measurement) {
   	if (measurement) {
@@ -110,7 +118,8 @@ app.delete('/measurements/:id', middleware.requireAuthentication, function (req,
 
 	db.measurement.destroy({
 		where: {
-			id: measurementId
+			id: measurementId,
+      userId: req.user.get('id')
 		}
 	}).then(function (rowsDeleted) {
 		if (rowsDeleted === 0) {
