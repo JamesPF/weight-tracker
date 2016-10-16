@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weight Tracker</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/d3.min.js"></script>
+</head>
+<body>
+  <h1>Weight Tracker App</h1>
+  <div id="chart"></div>
+  <ul id="measurement-list">
+  </ul>
+
+  <form class="measurement-form" id="measurement-entry">
+    <h2>New Entry</h2>
+    <input type="date" name="date" />
+    <br>
+    <input type="number" name="weight" step="0.1" min="0" />
+    <br>
+    <input type="submit" />
+  </form>
+  
+  <div id="page-overlay"></div>
+
+  <div class="modal"></div>
+
+  <script src="js/jquery-2.2.2.min.js"></script>
+  <script src="js/moment.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
